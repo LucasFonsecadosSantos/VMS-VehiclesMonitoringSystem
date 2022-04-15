@@ -35,6 +35,8 @@ public class JanelaSimulacao extends JFrame{
             for(int j = 0; j < columnAmount; j++){
                 if(mapa.getItem(i, j) != null){//Se existir algum objeto na posicao (i,j)
                     Vehicle veiculo = mapa.getItem(i, j);
+                    TrafficLightHindrance trafficLight =
+                    
                     Localizacao localizacao = veiculo.getCurrentLocation();
                     visaoMapa.desenharImagem(localizacao.getX(), localizacao.getY(), veiculo.getImagem());
                 }
