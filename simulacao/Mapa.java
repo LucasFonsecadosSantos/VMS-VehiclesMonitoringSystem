@@ -58,20 +58,18 @@ public class Mapa {
     
     public void updateMap(Vehicle vehicle) {
 
-        if (isAllowToContinue(vehicle)) {
-            removerItem(vehicle);
-            adicionarItem(vehicle);
-        }
+        removerItem(vehicle);
+        adicionarItem(vehicle);        
         
     }
 
-    private boolean isAllowToContinue(Localizacao currentLocation) {
+    public boolean isAllowToContinue(Localizacao currentLocation) {
 
-        return !hasRedTrafficLightAtPosition(currentLocation, nextLocation);
+        return !hasRedTrafficLightAtPosition(currentLocation);
 
     }
 
-    private boolean hasRedTrafficLightAtPosition(Localizacao currentLocation, Localizacao nextLocation) {
+    private boolean hasRedTrafficLightAtPosition(Localizacao currentLocation) {
 
         TrafficLightHindrance trafficLight;
         Localizacao trafficLightLocation;
@@ -90,7 +88,7 @@ public class Mapa {
 
     }
 
-    private boolean isNotNextLocationOccupied(Localizacao nextLocation) {
+    public boolean isNotNextLocationOccupied(Localizacao nextLocation) {
 
         return getItem(nextLocation.getX(), nextLocation.getY()) != null;
 

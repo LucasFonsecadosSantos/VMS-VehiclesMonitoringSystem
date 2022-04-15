@@ -1,10 +1,10 @@
-package simlacao.entity.provider;
+package simulacao.entity.provider;
 
 public class MeatProvider extends Provider {
 
     public MeatProvider() {
 
-        super();
+        super(new Product(5));
 
     }
 

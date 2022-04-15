@@ -1,10 +1,10 @@
-package simlacao.entity.provider;
+package simulacao.entity.provider;
 
 public class DeliSectionProvider extends Provider {
 
     public DeliSectionProvider() {
 
-        super();
+        super(new Product(1));
 
     }
 

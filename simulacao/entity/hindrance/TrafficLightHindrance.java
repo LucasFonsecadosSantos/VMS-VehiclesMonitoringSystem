@@ -1,6 +1,6 @@
 package simulacao.entity.hindrance;
 
-import java.util.Random;
+import simulacao.util.Randomizer;
 
 public class TrafficLightHindrance implements Hindrance {
 
@@ -18,8 +18,7 @@ public class TrafficLightHindrance implements Hindrance {
 
     public void setState() {
 
-        Random rand = new Random();
-        this.state = rand.nextInt((2 - 1) + 1) == 1 ? TrafficLightHindrance._RED_ : TrafficLightHindrance._GREEN_;
+        this.state = Randomizer.getRandomInteger(1,2) == 1 ? TrafficLightHindrance._RED_ : TrafficLightHindrance._GREEN_;
 
     }
 
