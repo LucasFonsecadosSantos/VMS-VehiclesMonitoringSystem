@@ -1,0 +1,14 @@
+package simulacao;
+/**
+ *
+ * @author Luiz Merschmann
+ */
+public class Principal {
+
+    public static void main(String[] args) {
+
+        Simulation sim = new Simulation();
+        sim.executeSimulation(40);
+
+    }
+}
