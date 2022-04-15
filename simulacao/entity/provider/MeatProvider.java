@@ -1,10 +1,15 @@
 package simulacao.entity.provider;
 
+import simulacao.entity.hindrance.Product;
+import simulacao.Localizacao;
+
 public class MeatProvider extends Provider {
 
-    public MeatProvider() {
+    private static final String _ICON_PATH_ = "./../../Imagens/MeatProvider.jpeg";
 
-        super(new Product(5));
+    public MeatProvider(Localizacao location) {
+
+        super(new Product(5), location, MeatProvider._ICON_PATH_);
 
     }
 

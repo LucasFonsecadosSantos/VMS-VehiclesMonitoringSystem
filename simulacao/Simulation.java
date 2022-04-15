@@ -24,6 +24,8 @@ public class Simulation {
     
     private JanelaSimulacao janelaSimulacao;
 
+    private List<Vehicle> bikeList;
+
     private static final int _MAX_TRAFFIC_LIGHT_ = 5;
     
     private Mapa map;
@@ -37,10 +39,10 @@ public class Simulation {
     private void initSimultion() {
 
         map = new Mapa();
-        List<Vehicle> vehicleList = initVehicles();
+        this.bikeList = initVehicles();
         List<Provider> providerList = initProviders();
         List<TrafficLightHindrance> trafficLightList = initTrafficLightHindrance();
-        initSimulationMap(vehicleList, providerList, trafficLightList);        
+        initSimulationMap(bikeList, providerList, trafficLightList);        
         janelaSimulacao = new JanelaSimulacao(map);
     }
 
@@ -48,10 +50,10 @@ public class Simulation {
 
         List<Provider> providerList = new ArrayList<>();
         
-        providerList.add(new DeliSectionProvider());
-        providerList.add(new DoughProvider());
-        providerList.add(new MeatProvider());
-        providerList.add(new DrinkProvider());
+        providerList.add(new DeliSectionProvider(initNewLocation()));
+        providerList.add(new DoughProvider(initNewLocation()));
+        providerList.add(new MeatProvider(initNewLocation()));
+        providerList.add(new DrinkProvider(initNewLocation()));
 
         return providerList;
 
@@ -64,25 +66,26 @@ public class Simulation {
         int trafficLightAmount = Randomizer.getRandomInteger(Simulation._MAX_TRAFFIC_LIGHT_);
 
         for (int i=0; i < trafficLightAmount; i++) {
-            trafficLightList.add(new TrafficLightHindrance());
+            
+            trafficLightList.add(new TrafficLightHindrance(initNewLocation()));
         }
 
         return trafficLightList;
 
     }
 
-    private void initSimulationMap(List<Vehicle> vehicleList, List<Provider> providerList, List<TrafficLightHindrance> trafficLightList) {
+    private void initSimulationMap(List<Vehicle> bikeList, List<Provider> providerList, List<TrafficLightHindrance> trafficLightList) {
         
-        addVehiclesToMap(vehicleList);
+        addVehiclesToMap(bikeList);
         addProvidersToMap(providerList);
         addTrafficLightsToMap(trafficLightList);
 
     }
 
-    private void addVehiclesToMap(List<Vehicle> vehicleList) {
+    private void addVehiclesToMap(List<Vehicle> bikeList) {
 
-        for (Vehicle vehicle : vehicleList) {
-            this.map.addVehicle(vehicle);
+        for (Vehicle bike : bikeList) {
+            this.map.addVehicle(bike);
         }
 
     }
@@ -105,16 +108,16 @@ public class Simulation {
 
     private List<Vehicle> initVehicles() {
 
-        List<Vehicle> vehicleList = new ArrayList<>();
-        vehicleList.add(initMainVehicle());
+        List<Vehicle> bikeList = new ArrayList<>();
+        initMainVehicle();
         
-        int bikeAmount = Randomizer.getRandomInteger(5);
+        //int bikeAmount = Randomizer.getRandomInteger(5);
 
-        for (int i=0; i < bikeAmount; i++) {
-            vehicleList.add(initBike());
+        for (int i=0; i < 5; i++) {
+            bikeList.add(initBike());
         }
 
-        return vehicleList;
+        return bikeList;
 
     }
 
@@ -136,24 +139,39 @@ public class Simulation {
     }
 
     private Localizacao initNewLocation() {
-        return new Localizacao(Randomizer.getRandomInteger(this.map.getLargura()),Randomizer.getRandomInteger(this.map.getAltura()));
+        return new Localizacao(Randomizer.getRandomInteger(this.map.getColumnAmount()),Randomizer.getRandomInteger(this.map.getRowAmount()));
     }
 
-    public void executeSimulation(int numPassos){
+    public void executeSimulation(int stepAmount){
 
         janelaSimulacao.executarAcao();
-        for (int i = 0; i < numPassos; i++) {
-            executarUmPasso();
+        for (int i = 0; i < stepAmount; i++) {
+            System.out.println("-------------------------------");
+            executeIteration();
             esperar(100);
         }
 
     }
 
-    private void executarUmPasso() {
-        map.removerItem(vehicle);
-        vehicle.executeStep(map);
-        map.adicionarItem(vehicle);
+    private void executeIteration() {
+        executeBikeIteration();
+        executeVehicleIteration();
+        
         janelaSimulacao.executarAcao();
+    }
+
+    private void executeBikeIteration() {
+        bikeList.forEach(vehicle -> {
+            map.removeVehicle(vehicle);
+            vehicle.executeStep(map);
+            map.addVehicle(vehicle);
+        });
+    }
+
+    private void executeVehicleIteration() {
+        map.removeVehicle(vehicle);
+        vehicle.executeStep(map);
+        map.addVehicle(vehicle);
     }
     
     private void esperar(int milisegundos){

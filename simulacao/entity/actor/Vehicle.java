@@ -12,38 +12,38 @@ import javax.swing.ImageIcon;
  */
 public abstract class Vehicle implements SimulatorActor {
 
-    private Localizacao localizacaoAtual;
+    private Localizacao currentLocation;
 
-    private Localizacao localizacaoDestino;
+    private Localizacao nextLocation;
 
     private Image imagem;
 
-    public Vehicle(Localizacao localizacao) {
+    public Vehicle(Localizacao localizacao, String iconPath) {
         
-        this.localizacaoAtual = localizacao;
-        localizacaoDestino = null;
-        //imagem = new ImageIcon(getClass().getResource("simulacao/Imagens/veiculo.jpg")).getImage();
+        this.currentLocation = localizacao;
+        nextLocation = null;
+        imagem = new ImageIcon(getClass().getResource(iconPath)).getImage();
 
     }
 
-    public Localizacao getLocalizacaoAtual() {
-        return localizacaoAtual;
+    public Localizacao getCurrentLocation() {
+        return currentLocation;
     }
 
-    public Localizacao getLocalizacaoDestino() {
-        return localizacaoDestino;
+    public Localizacao getNextLocation() {
+        return nextLocation;
     }
     
     public Image getImagem(){
         return imagem;
     }
 
-    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
-        this.localizacaoAtual = localizacaoAtual;
+    public void setLocalizacaoAtual(Localizacao currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
-    public void setLocalizacaoDestino(Localizacao localizacaoDestino) {
-        this.localizacaoDestino = localizacaoDestino;
+    public void setLocalizacaoDestino(Localizacao nextLocation) {
+        this.nextLocation = nextLocation;
     }
      
 }

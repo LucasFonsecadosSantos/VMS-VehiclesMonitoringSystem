@@ -10,56 +10,72 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Representa um mapa com todos os itens que participam da simulacao
+ * Representa um mapa com todos os items que participam da simulacao
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Mapa {
 
-    private Vehicle[][] itens;
+    private Vehicle[][] items;
 
     private Map<Provider, Localizacao> providers;
 
     private Map<TrafficLightHindrance, Localizacao> trafficLights;
     
-    private int largura;
+    private int columnAmount;
     
-    private int altura;
+    private int rowAmount;
     
-    private static final int LARGURA_PADRAO = 35;
+    private static final int _DEFAULT_COLUMN_AMOUNT_ = 35;
     
-    private static final int ALTURA_PADRAO = 35;
+    private static final int _DEFAULT_ROW_AMOUNT_ = 35;
     
     /**
-     * Cria mapa para alocar itens da simulacao.
+     * Cria mapa para alocar items da simulacao.
      * @param largura: largura da área de simulacao.
      * @param altura: altura da área de simulação.
      */
-    public Mapa(int largura, int altura) {
+    public Mapa(int columnAmount, int rowAmount) {
 
-        this.largura = largura;
-        this.altura = altura;
-        itens = new Vehicle[altura][largura];
+        this.columnAmount = columnAmount;
+        this.rowAmount = rowAmount;
+        initLists();
+        items = new Vehicle[columnAmount][rowAmount];
 
     }
     /**
      * Cria mapa com tamanho padrao.
      */
     public Mapa(){
-        this(LARGURA_PADRAO,ALTURA_PADRAO);
+        this(_DEFAULT_COLUMN_AMOUNT_, _DEFAULT_ROW_AMOUNT_);
+    }
+
+    private void initLists() {
+
+        this.providers = new HashMap<>();
+        this.trafficLights = new HashMap<>();
+
     }
     
-    public void adicionarItem(Vehicle v){
-        itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = v;
+    public void addVehicle(Vehicle v){
+        items[v.getCurrentLocation().getX()][v.getCurrentLocation().getY()] = v;
+    }
+
+    public void addProvider(Provider provider){
+        providers.put(provider, provider.getLocation());
     }
     
-    public void removerItem(Vehicle v){
-        itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = null;
+    public void addTrafficLight(TrafficLightHindrance trafficLight){
+        trafficLights.put(trafficLight, trafficLight.getLocation());
+    }
+
+    public void removeVehicle(Vehicle v){
+        items[v.getCurrentLocation().getX()][v.getCurrentLocation().getY()] = null;
     }
     
     public void updateMap(Vehicle vehicle) {
 
-        removerItem(vehicle);
-        adicionarItem(vehicle);        
+        removeVehicle(vehicle);
+        addVehicle(vehicle);        
         
     }
 
@@ -89,21 +105,27 @@ public class Mapa {
     }
 
     public boolean isNotNextLocationOccupied(Localizacao nextLocation) {
-
-        return getItem(nextLocation.getX(), nextLocation.getY()) != null;
+        
+        return getItem(nextLocation.getX(), nextLocation.getY()) == null;
 
     }
+
+    // public boolean hasGasStationAtCurrentLocation(Localizacao location) {
+
+    //     return 
+
+    // }
 
     public Vehicle getItem(int x, int y) {
-        return itens[x][y];
+        return items[x][y];
     }
 
-    public int getLargura() {
-        return largura;
+    public int getColumnAmount() {
+        return columnAmount;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getRowAmount() {
+        return rowAmount;
     }
     
 }

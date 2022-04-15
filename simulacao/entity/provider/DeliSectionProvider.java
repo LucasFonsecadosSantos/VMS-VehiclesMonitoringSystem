@@ -1,10 +1,15 @@
 package simulacao.entity.provider;
 
+import simulacao.entity.hindrance.Product;
+import simulacao.Localizacao;
+
 public class DeliSectionProvider extends Provider {
 
-    public DeliSectionProvider() {
+    private static final String _ICON_PATH_ = "./../../Imagens/DeliSectionProvider.jpeg";
 
-        super(new Product(1));
+    public DeliSectionProvider(Localizacao location) {
+
+        super(new Product(1), location, DeliSectionProvider._ICON_PATH_);
 
     }
 

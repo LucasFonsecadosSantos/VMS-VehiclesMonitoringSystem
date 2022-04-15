@@ -37,7 +37,7 @@ public class Localizacao {
      * @param localizacaoDestino: localizacao que se deseja alcancar.
      * @return Localizacao para onde se deve ir
      */
-    public Localizacao proximaLocalizacao(Localizacao localizacaoDestino){
+    public Localizacao calculateNextLocation(Localizacao localizacaoDestino){
         
         if(localizacaoDestino.equals(this)){//Verifica se já alcancou o destino
             

@@ -13,9 +13,14 @@ public class Car extends Vehicle {
 
     private int gasLevel;
 
+    private static final String _ICON_PATH_ = "./../../Imagens/Car.jpg";
+
+    private static final int _MAX_GAS_LEVEL_ = 30;
+
     public Car(Localizacao location) {
 
-        super(location);
+        super(location, Car._ICON_PATH_);
+        setGasLevel(Car._MAX_GAS_LEVEL_);
 
     }
 
@@ -40,22 +45,41 @@ public class Car extends Vehicle {
     @Override
     public void executeStep(Mapa map){
 
-        Localizacao currentLocation = getLocalizacaoAtual();
-        Localizacao nextLocation = getLocalizacaoDestino();
-
+        Localizacao currentLocation = getCurrentLocation();
+        Localizacao nextLocation = getNextLocation();
+        System.out.println("CAIU");
         if(nextLocation != null) {
-
+            
             if (map.isAllowToContinue(currentLocation)) {
 
                 if (map.isNotNextLocationOccupied(nextLocation)) {
                     
-                    Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
-                    setLocalizacaoAtual(proximaLocalizacao);
+                    updateLocation();
+                    //updateGasLevel();
+
                 }
             }
 
         }
 
     }
+
+    private void setGasLevel(int level) {
+        this.gasLevel = level;
+    }
+
+    private void updateLocation() {
+        Localizacao nextLocation = getCurrentLocation().calculateNextLocation(getNextLocation());
+        setLocalizacaoAtual(nextLocation);
+        System.out.println("CARRO: " + this.getCurrentLocation().toString());
+    }
+
+    // private void updateGasLevel() {
+    //     if (!map.hasGasStationAtCurrentLocation(getCurrentLocation())) {
+    //         decreaseGasLevel();
+    //     } else {
+    //         increaseGasLevel();
+    //     }
+    // }
 
 }

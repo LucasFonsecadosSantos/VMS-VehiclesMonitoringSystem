@@ -1,10 +1,15 @@
 package simulacao.entity.provider;
 
+import simulacao.entity.hindrance.Product;
+import simulacao.Localizacao;
+
 public class DoughProvider extends Provider {
 
-    public DoughProvider() {
+    private static final String _ICON_PATH_ = "./../../Imagens/DoughProvider.jpeg";
 
-        super(new Product(2));
+    public DoughProvider(Localizacao location) {
+
+        super(new Product(2), location, DoughProvider._ICON_PATH_);
 
     }
 

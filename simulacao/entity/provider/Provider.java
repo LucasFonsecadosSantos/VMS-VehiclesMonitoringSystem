@@ -1,13 +1,23 @@
 package simulacao.entity.provider;
 
 import simulacao.entity.hindrance.Product;
+import simulacao.Localizacao;
+
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public abstract class Provider {
 
     private Product product;
+    
+    private Localizacao location;
 
-    public Provider(Product product) {
+    private Image image;
 
+    public Provider(Product product, Localizacao location, String iconPath) {
+
+        setImage(iconPath);
+        setLocation(location);
         setProduct(product);
 
     }
@@ -32,10 +42,24 @@ public abstract class Provider {
 
     }
 
+    public Localizacao getLocation() {
+        return this.location;
+    }
+
     @Override
     public String toString() {
 
         return this.product.toString();
+
+    }
+
+    private void setLocation(Localizacao location) {
+        this.location = location;
+    }
+
+    private void setImage(String iconPath) {
+
+        this.image = new ImageIcon(getClass().getResource(iconPath)).getImage();
 
     }
     

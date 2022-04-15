@@ -1,8 +1,9 @@
 package simulacao.entity.hindrance;
 
+import simulacao.Localizacao;
 import simulacao.util.Randomizer;
 
-public class TrafficLightHindrance implements Hindrance {
+public class TrafficLightHindrance extends Hindrance {
 
     private String state;
 
@@ -10,8 +11,10 @@ public class TrafficLightHindrance implements Hindrance {
 
     public static final String _GREEN_ = "green";
 
-    public TrafficLightHindrance() {
+    public TrafficLightHindrance(Localizacao location) {
 
+        super(location);
+        System.out.println("SEMAFORO: " + location.toString());
         setState();
 
     }

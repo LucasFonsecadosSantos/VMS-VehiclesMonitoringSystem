@@ -16,7 +16,7 @@ public class JanelaSimulacao extends JFrame{
     
     public JanelaSimulacao(Mapa mapa){
         this.mapa = mapa;
-        visaoMapa = new VisaoMapa(mapa.getLargura(),mapa.getAltura());
+        visaoMapa = new VisaoMapa(mapa.getColumnAmount(),mapa.getRowAmount());
         getContentPane().add(visaoMapa);
         setTitle("Simulator");
         setSize(1000,1000);
@@ -29,11 +29,13 @@ public class JanelaSimulacao extends JFrame{
      */
     public void executarAcao(){
         visaoMapa.preparePaint();
-        for(int i = 0; i < mapa.getAltura(); i++){
-            for(int j = 0; j < mapa.getLargura(); j++){
+        int rowAmount = mapa.getRowAmount();
+        for(int i = 0; i < rowAmount; i++){
+            int columnAmount = mapa.getColumnAmount();
+            for(int j = 0; j < columnAmount; j++){
                 if(mapa.getItem(i, j) != null){//Se existir algum objeto na posicao (i,j)
                     Vehicle veiculo = mapa.getItem(i, j);
-                    Localizacao localizacao = veiculo.getLocalizacaoAtual();
+                    Localizacao localizacao = veiculo.getCurrentLocation();
                     visaoMapa.desenharImagem(localizacao.getX(), localizacao.getY(), veiculo.getImagem());
                 }
             }
@@ -51,11 +53,14 @@ public class JanelaSimulacao extends JFrame{
 
         private final int VIEW_SCALING_FACTOR = 6;
 
-
         private int larguraMapa, alturaMapa;
+
         private int xScale, yScale;
+
         private Dimension tamanho;
+
         private Graphics g;
+
         private Image imagemMapa;
 
         /**

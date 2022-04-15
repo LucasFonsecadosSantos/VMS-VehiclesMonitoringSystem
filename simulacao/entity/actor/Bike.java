@@ -5,22 +5,29 @@ import simulacao.Localizacao;
 
 public class Bike extends Vehicle {
 
+    private static final String _ICON_PATH_ = "./../../Imagens/Bike.jpeg";
+
     public Bike(Localizacao location) {
-        super(location);
+        super(location, Bike._ICON_PATH_);
     }
 
     @Override
     public void executeStep(Mapa map){
 
-        Localizacao destino = getLocalizacaoDestino();
+        Localizacao destino = getNextLocation();
 
         if(destino != null) {
 
-            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
-            setLocalizacaoAtual(proximaLocalizacao);
+            updateLocation();
 
         }
 
+    }
+
+    private void updateLocation() {
+        Localizacao nextLocation = getCurrentLocation().calculateNextLocation(getNextLocation());
+        setLocalizacaoAtual(nextLocation);
+        System.out.println("BIKE: " + getCurrentLocation().toString());
     }
 
 }
