@@ -1,6 +1,7 @@
 package simulacao.entity.actor;
 
 import simulacao.Localizacao;
+import simulacao.Mapa;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -21,7 +22,7 @@ public abstract class Vehicle implements SimulatorActor {
         
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
-        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
+        //imagem = new ImageIcon(getClass().getResource("simulacao/Imagens/veiculo.jpg")).getImage();
 
     }
 
@@ -43,20 +44,6 @@ public abstract class Vehicle implements SimulatorActor {
 
     public void setLocalizacaoDestino(Localizacao localizacaoDestino) {
         this.localizacaoDestino = localizacaoDestino;
-    }
-
-    @Override
-    public void executeStep(){
-
-        Localizacao destino = getLocalizacaoDestino();
-
-        if(destino != null) {
-
-            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
-            setLocalizacaoAtual(proximaLocalizacao);
-
-        }
-
     }
      
 }

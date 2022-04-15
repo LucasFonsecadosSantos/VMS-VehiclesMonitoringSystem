@@ -6,9 +6,9 @@ public class TrafficLightHindrance implements Hindrance {
 
     private String state;
 
-    private static final String _RED_ = "red";
+    public static final String _RED_ = "red";
 
-    private static final String _GREEN_ = "green";
+    public static final String _GREEN_ = "green";
 
     public TrafficLightHindrance() {
 

@@ -15,18 +15,18 @@ public class Simulation {
     
     private JanelaSimulacao janelaSimulacao;
     
-    private Mapa mapa;
+    private Mapa map;
     
     public Simulation() {
 
         Random rand = new Random(12345);
-        mapa = new Mapa();
-        int largura = mapa.getLargura();
-        int altura = mapa.getAltura();
+        map = new Mapa();
+        int largura = map.getLargura();
+        int altura = map.getAltura();
         veiculo = new Car(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um veiculo em uma posicao aleatoria
         veiculo.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
-        janelaSimulacao = new JanelaSimulacao(mapa);
+        map.adicionarItem(veiculo);//Inicializando o map com o veículo
+        janelaSimulacao = new JanelaSimulacao(map);
 
     }
     
@@ -41,9 +41,9 @@ public class Simulation {
     }
 
     private void executarUmPasso() {
-        mapa.removerItem(veiculo);
-        veiculo.executeStep();
-        mapa.adicionarItem(veiculo);
+        map.removerItem(veiculo);
+        veiculo.executeStep(map);
+        map.adicionarItem(veiculo);
         janelaSimulacao.executarAcao();
     }
     

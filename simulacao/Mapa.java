@@ -19,7 +19,7 @@ public class Mapa {
 
     private Map<Provider, Localizacao> providers;
 
-    private Map<TrafficLightHindrance, Localizacao> TrafficLights;
+    private Map<TrafficLightHindrance, Localizacao> trafficLights;
     
     private int largura;
     
@@ -56,12 +56,47 @@ public class Mapa {
         itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = null;
     }
     
-    public void atualizarMapa(Vehicle v){
-        removerItem(v);
-        adicionarItem(v);
+    public void updateMap(Vehicle vehicle) {
+
+        if (isAllowToContinue(vehicle)) {
+            removerItem(vehicle);
+            adicionarItem(vehicle);
+        }
+        
     }
-    
-    public Vehicle getItem(int x, int y){
+
+    private boolean isAllowToContinue(Localizacao currentLocation) {
+
+        return !hasRedTrafficLightAtPosition(currentLocation, nextLocation);
+
+    }
+
+    private boolean hasRedTrafficLightAtPosition(Localizacao currentLocation, Localizacao nextLocation) {
+
+        TrafficLightHindrance trafficLight;
+        Localizacao trafficLightLocation;
+
+        for (Map.Entry<TrafficLightHindrance, Localizacao> entry : trafficLights.entrySet()) {
+
+            trafficLight = entry.getKey();
+            trafficLightLocation = entry.getValue();
+
+            if (currentLocation.getX() == trafficLightLocation.getX() && currentLocation.getY() == trafficLightLocation.getY()) {
+                return trafficLight.getState().equals(TrafficLightHindrance._RED_);
+            }
+        }
+
+        return false;
+
+    }
+
+    private boolean isNotNextLocationOccupied(Localizacao nextLocation) {
+
+        return getItem(nextLocation.getX(), nextLocation.getY()) != null;
+
+    }
+
+    public Vehicle getItem(int x, int y) {
         return itens[x][y];
     }
 

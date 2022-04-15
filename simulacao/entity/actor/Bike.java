@@ -1,5 +1,6 @@
 package simulacao.entity.actor;
 
+import simulacao.Mapa;
 import simulacao.Localizacao;
 
 public class Bike extends Vehicle {
@@ -9,7 +10,7 @@ public class Bike extends Vehicle {
     }
 
     @Override
-    public void executeStep(){
+    public void executeStep(Mapa map){
 
         Localizacao destino = getLocalizacaoDestino();
 

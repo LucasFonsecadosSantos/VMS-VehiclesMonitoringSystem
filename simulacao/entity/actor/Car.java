@@ -2,6 +2,7 @@ package simulacao.entity.actor;
 
 import simulacao.Localizacao;
 import simulacao.entity.hindrance.Product;
+import simulacao.Mapa;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -37,14 +38,21 @@ public class Car extends Vehicle {
     }
 
     @Override
-    public void executeStep(){
+    public void executeStep(Mapa map){
 
-        Localizacao destino = getLocalizacaoDestino();
+        Localizacao currentLocation = getLocalizacaoAtual();
+        Localizacao nextLocation = getLocalizacaoDestino();
 
-        if(destino != null) {
+        if(nextLocation != null) {
 
-            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
-            setLocalizacaoAtual(proximaLocalizacao);
+            if (map.isAllowToContinue(currentLocation)) {
+
+                if (map.isNotNextLocationOccupied(nextLocation)) {
+                    
+                    Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
+                    setLocalizacaoAtual(proximaLocalizacao);
+                }
+            }
 
         }
 
