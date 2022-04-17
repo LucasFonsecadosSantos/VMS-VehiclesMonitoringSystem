@@ -1,15 +1,13 @@
 package simulacao.entity.hindrance;
 
-public class Product extends Hindrance {
+public class Product {
 
     private int weight;
 
     public Product(int weight) {
-        super();
         setWeight(weight);
     }
 
-    @Override
     public int getWeight() {
         return this.weight;
     }

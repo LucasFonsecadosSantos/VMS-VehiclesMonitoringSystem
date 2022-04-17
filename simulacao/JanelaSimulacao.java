@@ -1,22 +1,26 @@
 package simulacao;
+
 import java.awt.*;
 import javax.swing.*;
 
-import simulacao.entity.actor.Vehicle;
-import simulacao.entity.actor.Bike;
-import simulacao.entity.actor.Car;
+import simulacao.entity.actor.VehicleActor;
+import simulacao.entity.actor.BikeActor;
+import simulacao.entity.actor.CarActor;
+import simulacao.entity.actor.SimulationActor;
+import simulacao.entity.actor.TrafficLightActor;
+import simulacao.entity.provider.Provider;
 
 /**
  * Fornece a visualizacao da simulacao
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class JanelaSimulacao extends JFrame{
-    private Mapa mapa;
+    private SimulationMap map;
     private VisaoMapa visaoMapa;
     
-    public JanelaSimulacao(Mapa mapa){
-        this.mapa = mapa;
-        visaoMapa = new VisaoMapa(mapa.getColumnAmount(),mapa.getRowAmount());
+    public JanelaSimulacao(SimulationMap map){
+        this.map = map;
+        visaoMapa = new VisaoMapa(map.getColumnAmount(),map.getRowAmount());
         getContentPane().add(visaoMapa);
         setTitle("Simulator");
         setSize(1000,1000);
@@ -25,20 +29,32 @@ public class JanelaSimulacao extends JFrame{
     }
     
     /**
-     * Mostra o estado atual do mapa.
+     * Mostra o estado atual do map.
      */
     public void executarAcao(){
         visaoMapa.preparePaint();
-        int rowAmount = mapa.getRowAmount();
+        int rowAmount = map.getRowAmount();
         for(int i = 0; i < rowAmount; i++){
-            int columnAmount = mapa.getColumnAmount();
+            int columnAmount = map.getColumnAmount();
             for(int j = 0; j < columnAmount; j++){
-                if(mapa.getItem(i, j) != null){//Se existir algum objeto na posicao (i,j)
-                    Vehicle veiculo = mapa.getItem(i, j);
-                    TrafficLightHindrance trafficLight =
+                TrafficLightActor trafficLight = map.getTrafficLightAtCoordinates(i, j);
+                    Provider provider = map.getProviderAtCoordinates(i, j);
+                    if (provider!= null) {
+                        visaoMapa.desenharImagem(i, j, provider.getImage());
+                        }
+                        if (trafficLight!= null) {
+                            System.out.println("DAMMIT");
+                        visaoMapa.desenharImagem(i, j, trafficLight.getImage());
+                        }
+                if(map.getActor(i, j) != null){//Se existir algum objeto na posicao (i,j)
+                    SimulationActor veiculo = map.getActor(i, j);          
                     
-                    Localizacao localizacao = veiculo.getCurrentLocation();
-                    visaoMapa.desenharImagem(localizacao.getX(), localizacao.getY(), veiculo.getImagem());
+                    Location location = veiculo.getCurrentLocation();
+                    if (veiculo != null) {
+                        visaoMapa.desenharImagem(location.getX(), location.getY(), veiculo.getImage());
+                    }
+                    
+                    
                 }
             }
         }
@@ -46,7 +62,7 @@ public class JanelaSimulacao extends JFrame{
     }
 
     /**
-     * Fornece uma visualizacao grafica do mapa. Esta eh 
+     * Fornece uma visualizacao grafica do map. Esta eh 
      * uma classe interna que define os componentes da GUI.
      * Ela contém alguns detalhes mais avancados sobre GUI 
      * que voce pode ignorar para realizacao do seu trabalho.

@@ -6,7 +6,7 @@ import java.util.Random;
  * Representa uma localização no mapa
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
-public class Localizacao {
+public class Location {
 
     private int x;
 
@@ -19,7 +19,7 @@ public class Localizacao {
      * @param x Coordenada x: deve ser maior ou igual a 0.
      * @param y Coordenada y: deve ser maior ou igual a 0.
      */
-    public Localizacao(int x, int y) {
+    public Location(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -34,36 +34,39 @@ public class Localizacao {
     
     /**
      * Gera a localizacao para se mover visando alcançar o destino
-     * @param localizacaoDestino: localizacao que se deseja alcancar.
+     * @param nextLocation: localizacao que se deseja alcancar.
      * @return Localizacao para onde se deve ir
      */
-    public Localizacao calculateNextLocation(Localizacao localizacaoDestino){
+    public Location calculateNextLocation(Location nextLocation){
         
-        if(localizacaoDestino.equals(this)){//Verifica se já alcancou o destino
+        if(nextLocation.equals(this)){//Verifica se já alcancou o destino
             
-            return localizacaoDestino;
+            return nextLocation;
 
         }else{
 
-            int destX = localizacaoDestino.getX();
-            int destY = localizacaoDestino.getY();
+            int destX = nextLocation.getX();
+            int destY = nextLocation.getY();
             int deslocX = x < destX ? 1 : x > destX ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em x
             int deslocY = y < destY ? 1 : y > destY ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em y
             
-            Localizacao novaLocalizacao;
+            Location newLocation;
             
             if(deslocX != 0 && deslocY != 0) {//Se nenhuma coordenada coincide com a localizacao destino
+                
                 if(rand.nextInt(2) == 0) {//Atualizar x
-                    novaLocalizacao = new Localizacao(x + deslocX, y);
+                    newLocation = new Location(x + deslocX, y);
                 } else {//Atualizar y
-                    novaLocalizacao = new Localizacao(x, y + deslocY);
+                    newLocation = new Location(x, y + deslocY);
                 }
             } else {
-
-                if(deslocX != 0) novaLocalizacao = new Localizacao(x + deslocX, y);
-                else novaLocalizacao = new Localizacao(x, y + deslocY);
+                
+                newLocation = (deslocX != 0) ? 
+                                new Location(x + deslocX, y) :
+                                new Location(x, y + deslocY);
+                
             }
-            return novaLocalizacao;
+            return newLocation;
         }
     }
     
@@ -76,10 +79,10 @@ public class Localizacao {
     public boolean equals(Object obj){
         if(this == obj){
             return true;
-        }else if(!(obj instanceof Localizacao)){
+        }else if(!(obj instanceof Location)){
             return false;
         }else{
-            Localizacao outro = (Localizacao) obj;
+            Location outro = (Location) obj;
             return x == outro.x && y == outro.y;
         }
     }

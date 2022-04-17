@@ -1,13 +1,13 @@
 package simulacao.entity.actor;
 
-import simulacao.Localizacao;
+import simulacao.Location;
 import simulacao.entity.hindrance.Product;
-import simulacao.Mapa;
+import simulacao.SimulationMap;
 
 import java.util.List;
 import java.util.ArrayList;
 
-public class Car extends Vehicle {
+public class CarActor extends VehicleActor {
 
     private List<Product> productList;
 
@@ -17,10 +17,10 @@ public class Car extends Vehicle {
 
     private static final int _MAX_GAS_LEVEL_ = 30;
 
-    public Car(Localizacao location) {
+    public CarActor(Location location) {
 
-        super(location, Car._ICON_PATH_);
-        setGasLevel(Car._MAX_GAS_LEVEL_);
+        super(location, CarActor._ICON_PATH_);
+        setGasLevel(CarActor._MAX_GAS_LEVEL_);
 
     }
 
@@ -43,18 +43,18 @@ public class Car extends Vehicle {
     }
 
     @Override
-    public void executeStep(Mapa map){
+    public void executeStep(SimulationMap map){
 
-        Localizacao currentLocation = getCurrentLocation();
-        Localizacao nextLocation = getNextLocation();
-        System.out.println("CAIU");
+        Location currentLocation = getCurrentLocation();
+        Location nextLocation = getNextLocation();
+        
         if(nextLocation != null) {
             
             if (map.isAllowToContinue(currentLocation)) {
-
+                
                 if (map.isNotNextLocationOccupied(nextLocation)) {
-                    
-                    updateLocation();
+                        
+                    super.updateLocation();
                     //updateGasLevel();
 
                 }
@@ -66,12 +66,6 @@ public class Car extends Vehicle {
 
     private void setGasLevel(int level) {
         this.gasLevel = level;
-    }
-
-    private void updateLocation() {
-        Localizacao nextLocation = getCurrentLocation().calculateNextLocation(getNextLocation());
-        setLocalizacaoAtual(nextLocation);
-        System.out.println("CARRO: " + this.getCurrentLocation().toString());
     }
 
     // private void updateGasLevel() {
