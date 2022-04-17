@@ -1,9 +1,12 @@
-package simulacao;
+package simulation;
+
+import simulation.application.Simulation;
+
 /**
  *
  * @author Luiz Merschmann
  */
-public class Principal {
+public class Main {
 
     public static void main(String[] args) {
 

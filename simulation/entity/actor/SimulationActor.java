@@ -1,10 +1,11 @@
-package simulacao.entity.actor;
+package simulation.entity.actor;
 
 import javax.swing.ImageIcon;
-import java.awt.Image;
 
-import simulacao.Location;
-import simulacao.SimulationMap;
+import simulation.Location;
+import simulation.application.SimulationMap;
+
+import java.awt.Image;
 
 public abstract class SimulationActor {
 
@@ -42,6 +43,6 @@ public abstract class SimulationActor {
         this.nextLocation = nextLocation;
     }
 
-    public abstract void executeStep(SimulationMap map);
+    public abstract void executeStep(SimulationMap map, int step);
 
 }

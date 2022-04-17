@@ -1,7 +1,7 @@
-package simulacao.entity.actor;
+package simulation.entity.actor;
 
-import simulacao.SimulationMap;
-import simulacao.Location;
+import simulation.Location;
+import simulation.application.SimulationMap;
 
 public class BikeActor extends VehicleActor {
 
@@ -12,7 +12,7 @@ public class BikeActor extends VehicleActor {
     }
 
     @Override
-    public void executeStep(SimulationMap map){
+    public void executeStep(SimulationMap map, int step){
 
         Location destino = getNextLocation();
 

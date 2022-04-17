@@ -1,11 +1,13 @@
-package simulacao;
-
-import simulacao.entity.actor.SimulationActor;
-import simulacao.entity.actor.TrafficLightActor;
-import simulacao.entity.actor.VehicleActor;
-import simulacao.entity.provider.Provider;
+package simulation.application;
 
 import java.util.Map;
+
+import simulation.Location;
+import simulation.entity.actor.SimulationActor;
+import simulation.entity.actor.TrafficLightActor;
+import simulation.entity.actor.VehicleActor;
+import simulation.entity.provider.Provider;
+
 import java.util.HashMap;
 
 /**
@@ -38,6 +40,7 @@ public class SimulationMap {
     }
 
     public SimulationMap getInstance(int columnAmount, int rowAmount) {
+        
         if (singletonObject == null) {
             singletonObject = new SimulationMap(columnAmount, rowAmount);
         }

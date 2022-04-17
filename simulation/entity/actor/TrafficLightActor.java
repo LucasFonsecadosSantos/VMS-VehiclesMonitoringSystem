@@ -1,11 +1,12 @@
-package simulacao.entity.actor;
+package simulation.entity.actor;
 
 import javax.swing.ImageIcon;
-import java.awt.Image;
 
-import simulacao.Location;
-import simulacao.SimulationMap;
-import simulacao.util.Randomizer;
+import simulation.Location;
+import simulation.application.SimulationMap;
+import simulation.util.Randomizer;
+
+import java.awt.Image;
 
 public class TrafficLightActor extends SimulationActor {
 
@@ -19,6 +20,8 @@ public class TrafficLightActor extends SimulationActor {
 
     private static final String _ICON_PATH_GREEN_STATE_ = "./../../Imagens/greenSign.jpeg";
 
+    private static final int _CHANGE_STATE_FACTOR_ = 4;
+
     public TrafficLightActor(Location location) {
 
         super(location, TrafficLightActor._ICON_PATH_GREEN_STATE_);
@@ -27,9 +30,11 @@ public class TrafficLightActor extends SimulationActor {
     }
 
     @Override
-    public void executeStep(SimulationMap map) {
+    public void executeStep(SimulationMap map, int step) {
 
-        changeState();
+        if (step % TrafficLightActor._CHANGE_STATE_FACTOR_ == 0) {
+            changeState();
+        }
 
     }
 

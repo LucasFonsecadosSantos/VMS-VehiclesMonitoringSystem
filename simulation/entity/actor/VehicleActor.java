@@ -1,10 +1,10 @@
-package simulacao.entity.actor;
-
-import simulacao.Location;
-import simulacao.SimulationMap;
+package simulation.entity.actor;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+
+import simulation.Location;
+import simulation.application.SimulationMap;
 
 /**
  * Representa os veiculos da simulacao.
@@ -24,6 +24,6 @@ public abstract class VehicleActor extends SimulationActor {
     }
     
     @Override
-    public abstract void executeStep(SimulationMap map);
+    public abstract void executeStep(SimulationMap map, int step);
 
 }

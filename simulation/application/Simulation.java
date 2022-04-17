@@ -1,17 +1,20 @@
-package simulacao;
-
-import simulacao.entity.actor.VehicleActor;
-import simulacao.entity.actor.CarActor;
-import simulacao.entity.actor.TrafficLightActor;
-import simulacao.entity.actor.BikeActor;
-import simulacao.entity.provider.Provider;
-import simulacao.entity.provider.MeatProvider;
-import simulacao.entity.provider.DrinkProvider;
-import simulacao.entity.provider.DoughProvider;
-import simulacao.entity.provider.DeliSectionProvider;
-import simulacao.util.Randomizer;
+package simulation.application;
 
 import java.util.List;
+
+import simulation.Location;
+import simulation.entity.actor.BikeActor;
+import simulation.entity.actor.CarActor;
+import simulation.entity.actor.TrafficLightActor;
+import simulation.entity.actor.VehicleActor;
+import simulation.entity.provider.DeliSectionProvider;
+import simulation.entity.provider.DoughProvider;
+import simulation.entity.provider.DrinkProvider;
+import simulation.entity.provider.MeatProvider;
+import simulation.entity.provider.Provider;
+import simulation.util.Randomizer;
+import simulation.view.JanelaSimulacao;
+
 import java.util.ArrayList;
 
 /**
@@ -43,11 +46,13 @@ public class Simulation {
     private void initSimultion() {
 
         map = SimulationMap.getInstance();
+
         this.bikeList = initVehicles();
         providerList = initProviders();
         trafficLightList = initTrafficLight();
         initSimulationMap(bikeList, providerList, trafficLightList);        
         janelaSimulacao = new JanelaSimulacao(map);
+
     }
 
     private List<Provider> initProviders() {
@@ -162,36 +167,34 @@ public class Simulation {
     private void executeIteration(int stepNumber) {
 
         executeTrafficLightIteration(stepNumber);
-        executeBikeIteration();
-        executeVehicleIteration();
+        executeBikeIteration(stepNumber);
+        executeVehicleIteration(stepNumber);
         
         janelaSimulacao.executarAcao();
     }
 
-    private void executeTrafficLightIteration(int stepNumber) {
+    private void executeTrafficLightIteration(int step) {
 
-        if (stepNumber % 4 == 0) {
-            trafficLightList.forEach(traffictLight -> {
-                traffictLight.executeStep(map);
-            });
-        }
+        trafficLightList.forEach(traffictLight -> {
+            traffictLight.executeStep(map, step);
+        });
 
     }
 
-    private void executeBikeIteration() {
+    private void executeBikeIteration(int step) {
 
         bikeList.forEach(vehicle -> {
             map.removeVehicle(vehicle);
-            vehicle.executeStep(map);
+            vehicle.executeStep(map, step);
             map.addVehicle(vehicle);
         });
 
     }
 
-    private void executeVehicleIteration() {
+    private void executeVehicleIteration(int step) {
 
         map.removeVehicle(vehicle);
-        vehicle.executeStep(map);
+        vehicle.executeStep(map, step);
         map.addVehicle(vehicle);
 
     }

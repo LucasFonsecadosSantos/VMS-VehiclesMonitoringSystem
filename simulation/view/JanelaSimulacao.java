@@ -1,14 +1,16 @@
-package simulacao;
+package simulation.view;
 
 import java.awt.*;
 import javax.swing.*;
 
-import simulacao.entity.actor.VehicleActor;
-import simulacao.entity.actor.BikeActor;
-import simulacao.entity.actor.CarActor;
-import simulacao.entity.actor.SimulationActor;
-import simulacao.entity.actor.TrafficLightActor;
-import simulacao.entity.provider.Provider;
+import simulation.Location;
+import simulation.application.SimulationMap;
+import simulation.entity.actor.BikeActor;
+import simulation.entity.actor.CarActor;
+import simulation.entity.actor.SimulationActor;
+import simulation.entity.actor.TrafficLightActor;
+import simulation.entity.actor.VehicleActor;
+import simulation.entity.provider.Provider;
 
 /**
  * Fornece a visualizacao da simulacao

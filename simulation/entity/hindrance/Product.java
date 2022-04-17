@@ -1,4 +1,4 @@
-package simulacao.entity.hindrance;
+package simulation.entity.hindrance;
 
 public class Product {
 

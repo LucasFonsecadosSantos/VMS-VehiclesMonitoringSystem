@@ -1,11 +1,12 @@
-package simulacao.entity.actor;
-
-import simulacao.Location;
-import simulacao.entity.hindrance.Product;
-import simulacao.entity.provider.Provider;
-import simulacao.SimulationMap;
+package simulation.entity.actor;
 
 import java.util.List;
+
+import simulation.Location;
+import simulation.application.SimulationMap;
+import simulation.entity.hindrance.Product;
+import simulation.entity.provider.Provider;
+
 import java.util.ArrayList;
 
 public class CarActor extends VehicleActor {
@@ -40,28 +41,30 @@ public class CarActor extends VehicleActor {
 
     public void retriveProduct(Product product) {
 
-        this.productList.add(product);
-        System.out.println("SIZE " + this.productList.size());
+        if (!this.productList.contains(product)) {
+            this.productList.add(product);
+            System.out.println("SIZE " + this.productList.size());
+        }
 
     }
 
     @Override
-    public void executeStep(SimulationMap map){
+    public void executeStep(SimulationMap map, int step){
 
         Location currentLocation = getCurrentLocation();
         Location nextLocation = getNextLocation();
         Provider provider = null;
 
-        if(nextLocation != null) {
+        if(isValidStep(nextLocation, step)) {
             
             if (map.isAllowToContinue(currentLocation)) {
                 
                 if (map.isNotNextLocationOccupied(nextLocation)) {
 
                     provider = map.getProviderAtCoordinates(nextLocation.getX(), nextLocation.getY());
-                    System.out.print("ZE ");
+                    
                     if (provider != null) {
-                        System.out.print(" 0000 ");
+                        System.out.println("Pegou " + provider.getProduct());
                         this.retriveProduct(provider.getProduct());
                     }
                     super.updateLocation();
@@ -74,8 +77,25 @@ public class CarActor extends VehicleActor {
 
     }
 
+    private boolean isValidStep(Location nextLocation, int step) {
+        return ((nextLocation != null && getWeight() == 0) ||
+        (nextLocation != null && step % getWeight() == 0));
+    }
+
     private void setGasLevel(int level) {
         this.gasLevel = level;
+    }
+
+    private int getWeight() {
+        
+        int weight = 0;
+
+        for (Product product : this.productList) {
+            weight += product.getWeight();
+        }
+
+        return weight;
+
     }
 
     // private void updateGasLevel() {

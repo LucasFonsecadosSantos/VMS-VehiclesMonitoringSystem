@@ -1,10 +1,10 @@
-package simulacao.entity.provider;
-
-import simulacao.entity.hindrance.Product;
-import simulacao.Location;
+package simulation.entity.provider;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+
+import simulation.Location;
+import simulation.entity.hindrance.Product;
 
 public abstract class Provider {
 
