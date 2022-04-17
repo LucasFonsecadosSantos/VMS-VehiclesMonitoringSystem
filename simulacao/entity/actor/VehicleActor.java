@@ -21,7 +21,6 @@ public abstract class VehicleActor extends SimulationActor {
     protected void updateLocation() {
         Location nextLocation = getCurrentLocation().calculateNextLocation(getNextLocation());
         setCurrentLocation(nextLocation);
-        //System.out.println("VEICULO: " + this.getCurrentLocation().toString());
     }
     
     @Override

@@ -2,6 +2,7 @@ package simulacao.entity.actor;
 
 import simulacao.Location;
 import simulacao.entity.hindrance.Product;
+import simulacao.entity.provider.Provider;
 import simulacao.SimulationMap;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class CarActor extends VehicleActor {
     public CarActor(Location location) {
 
         super(location, CarActor._ICON_PATH_);
+        this.productList = new ArrayList<>();
         setGasLevel(CarActor._MAX_GAS_LEVEL_);
 
     }
@@ -39,6 +41,7 @@ public class CarActor extends VehicleActor {
     public void retriveProduct(Product product) {
 
         this.productList.add(product);
+        System.out.println("SIZE " + this.productList.size());
 
     }
 
@@ -47,13 +50,20 @@ public class CarActor extends VehicleActor {
 
         Location currentLocation = getCurrentLocation();
         Location nextLocation = getNextLocation();
-        
+        Provider provider = null;
+
         if(nextLocation != null) {
             
             if (map.isAllowToContinue(currentLocation)) {
                 
                 if (map.isNotNextLocationOccupied(nextLocation)) {
-                        
+
+                    provider = map.getProviderAtCoordinates(nextLocation.getX(), nextLocation.getY());
+                    System.out.print("ZE ");
+                    if (provider != null) {
+                        System.out.print(" 0000 ");
+                        this.retriveProduct(provider.getProduct());
+                    }
                     super.updateLocation();
                     //updateGasLevel();
 

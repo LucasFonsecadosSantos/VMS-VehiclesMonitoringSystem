@@ -3,16 +3,10 @@ package simulacao;
 import simulacao.entity.actor.SimulationActor;
 import simulacao.entity.actor.TrafficLightActor;
 import simulacao.entity.actor.VehicleActor;
-import simulacao.entity.actor.CarActor;
-import simulacao.entity.actor.BikeActor;
 import simulacao.entity.provider.Provider;
 
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.security.KeyStore.Entry;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Representa um mapa com todos os actors que participam da simulacao
@@ -33,13 +27,29 @@ public class SimulationMap {
     private static final int _DEFAULT_COLUMN_AMOUNT_ = 35;
     
     private static final int _DEFAULT_ROW_AMOUNT_ = 35;
+
+    private static SimulationMap singletonObject = null;
     
+    public static SimulationMap getInstance() {
+        if (singletonObject == null) {
+            singletonObject = new SimulationMap();
+        }
+        return singletonObject;
+    }
+
+    public SimulationMap getInstance(int columnAmount, int rowAmount) {
+        if (singletonObject == null) {
+            singletonObject = new SimulationMap(columnAmount, rowAmount);
+        }
+        return singletonObject;
+    }
+
     /**
      * Cria mapa para alocar actors da simulacao.
      * @param largura: largura da área de simulacao.
      * @param altura: altura da área de simulação.
      */
-    public SimulationMap(int columnAmount, int rowAmount) {
+    private SimulationMap(int columnAmount, int rowAmount) {
 
         this.columnAmount = columnAmount;
         this.rowAmount = rowAmount;
@@ -50,9 +60,9 @@ public class SimulationMap {
     /**
      * Cria mapa com tamanho padrao.
      */
-    public SimulationMap(){
+    private SimulationMap(){
         this(_DEFAULT_COLUMN_AMOUNT_, _DEFAULT_ROW_AMOUNT_);
-    }
+    }   
 
     private void initLists() {
 
@@ -132,6 +142,7 @@ public class SimulationMap {
             if (entry.getValue().getX() == x && entry.getValue().getY() == y) {
                 return entry.getKey();
             }
+
         }
         return null;
 
@@ -144,6 +155,7 @@ public class SimulationMap {
             if (entry.getValue().getX() == x && entry.getValue().getY() == y) {
                 return entry.getKey();
             }
+            
         }
         return null;
 

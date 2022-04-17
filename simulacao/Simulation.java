@@ -42,7 +42,7 @@ public class Simulation {
     
     private void initSimultion() {
 
-        map = new SimulationMap();
+        map = SimulationMap.getInstance();
         this.bikeList = initVehicles();
         providerList = initProviders();
         trafficLightList = initTrafficLight();
@@ -54,10 +54,12 @@ public class Simulation {
 
         List<Provider> providerList = new ArrayList<>();
         
-        providerList.add(new DeliSectionProvider(initNewLocation()));
-        providerList.add(new DoughProvider(initNewLocation()));
-        providerList.add(new MeatProvider(initNewLocation()));
-        providerList.add(new DrinkProvider(initNewLocation()));
+        for (int i=0; i<10; i++) {
+            providerList.add(new DeliSectionProvider(initNewLocation()));
+            providerList.add(new DoughProvider(initNewLocation()));
+            providerList.add(new MeatProvider(initNewLocation()));
+            providerList.add(new DrinkProvider(initNewLocation()));
+        }
 
         return providerList;
 
