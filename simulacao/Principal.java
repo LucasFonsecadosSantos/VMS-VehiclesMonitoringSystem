@@ -8,7 +8,7 @@ public class Principal {
     public static void main(String[] args) {
 
         Simulation sim = new Simulation();
-        sim.executeSimulation(40);
+        sim.executeSimulation(100);
 
     }
 }

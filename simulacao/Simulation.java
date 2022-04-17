@@ -26,6 +26,10 @@ public class Simulation {
 
     private List<VehicleActor> bikeList;
 
+    private List<TrafficLightActor> trafficLightList;
+
+    private List<Provider> providerList;
+
     private static final int _MAX_TRAFFIC_LIGHT_ = 5;
     
     private SimulationMap map;
@@ -40,8 +44,8 @@ public class Simulation {
 
         map = new SimulationMap();
         this.bikeList = initVehicles();
-        List<Provider> providerList = initProviders();
-        List<TrafficLightActor> trafficLightList = initTrafficLightHindrance();
+        providerList = initProviders();
+        trafficLightList = initTrafficLight();
         initSimulationMap(bikeList, providerList, trafficLightList);        
         janelaSimulacao = new JanelaSimulacao(map);
     }
@@ -59,7 +63,7 @@ public class Simulation {
 
     }
 
-    private List<TrafficLightActor> initTrafficLightHindrance() {
+    private List<TrafficLightActor> initTrafficLight() {
 
         List<TrafficLightActor> trafficLightList = new ArrayList<>();
 
@@ -147,35 +151,50 @@ public class Simulation {
 
         janelaSimulacao.executarAcao();
         for (int i = 0; i < stepAmount; i++) {
-            System.out.println("-------------------------------");
-            executeIteration();
-            esperar(100);
+            executeIteration(i);
+            simulationDelay(200);
         }
 
     }
 
-    private void executeIteration() {
+    private void executeIteration(int stepNumber) {
+
+        executeTrafficLightIteration(stepNumber);
         executeBikeIteration();
         executeVehicleIteration();
         
         janelaSimulacao.executarAcao();
     }
 
+    private void executeTrafficLightIteration(int stepNumber) {
+
+        if (stepNumber % 4 == 0) {
+            trafficLightList.forEach(traffictLight -> {
+                traffictLight.executeStep(map);
+            });
+        }
+
+    }
+
     private void executeBikeIteration() {
+
         bikeList.forEach(vehicle -> {
             map.removeVehicle(vehicle);
             vehicle.executeStep(map);
             map.addVehicle(vehicle);
         });
+
     }
 
     private void executeVehicleIteration() {
+
         map.removeVehicle(vehicle);
         vehicle.executeStep(map);
         map.addVehicle(vehicle);
+
     }
     
-    private void esperar(int milisegundos){
+    private void simulationDelay(int milisegundos){
         try{
             Thread.sleep(milisegundos);
         }catch(InterruptedException e){

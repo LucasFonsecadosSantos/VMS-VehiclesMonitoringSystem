@@ -37,15 +37,16 @@ public class JanelaSimulacao extends JFrame{
         for(int i = 0; i < rowAmount; i++){
             int columnAmount = map.getColumnAmount();
             for(int j = 0; j < columnAmount; j++){
+                
                 TrafficLightActor trafficLight = map.getTrafficLightAtCoordinates(i, j);
-                    Provider provider = map.getProviderAtCoordinates(i, j);
-                    if (provider!= null) {
-                        visaoMapa.desenharImagem(i, j, provider.getImage());
-                        }
-                        if (trafficLight!= null) {
-                            System.out.println("DAMMIT");
-                        visaoMapa.desenharImagem(i, j, trafficLight.getImage());
-                        }
+                Provider provider = map.getProviderAtCoordinates(i, j);
+                if (provider!= null) {
+                    visaoMapa.desenharImagem(i, j, provider.getImage());
+                }
+                if (trafficLight!= null) {
+                    visaoMapa.desenharImagem(i, j, trafficLight.getImage());
+                }
+                
                 if(map.getActor(i, j) != null){//Se existir algum objeto na posicao (i,j)
                     SimulationActor veiculo = map.getActor(i, j);          
                     

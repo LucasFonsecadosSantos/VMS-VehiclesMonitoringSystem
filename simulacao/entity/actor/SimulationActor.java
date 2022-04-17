@@ -12,7 +12,7 @@ public abstract class SimulationActor {
 
     private Location nextLocation;
 
-    private Image image;
+    protected Image image;
 
     public SimulationActor(Location location, String iconPath) {
 

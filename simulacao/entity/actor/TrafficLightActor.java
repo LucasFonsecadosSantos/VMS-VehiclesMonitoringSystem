@@ -1,5 +1,8 @@
 package simulacao.entity.actor;
 
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 import simulacao.Location;
 import simulacao.SimulationMap;
 import simulacao.util.Randomizer;
@@ -20,7 +23,6 @@ public class TrafficLightActor extends SimulationActor {
 
         super(location, TrafficLightActor._ICON_PATH_GREEN_STATE_);
         setState();
-        System.out.println("SEMAFORO: " + location.toString());
         
     }
 
@@ -33,7 +35,8 @@ public class TrafficLightActor extends SimulationActor {
 
     public void changeState() {
 
-        this.state = getState() == TrafficLightActor._RED_ ? TrafficLightActor._GREEN_ : TrafficLightActor._RED_;
+        setState(getState().equals(TrafficLightActor._RED_) ? TrafficLightActor._GREEN_ : TrafficLightActor._RED_);
+        this.image = new ImageIcon(getClass().getResource(getState().equals(TrafficLightActor._RED_) ? TrafficLightActor._ICON_PATH_GREEN_STATE_ : TrafficLightActor._ICON_PATH_RED_STATE_)).getImage();
 
     }
 
