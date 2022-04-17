@@ -10,7 +10,7 @@ echo '| -> Bruna Capeleti                                                     |'
 echo '| -> Joicy Reis                                                         |'
 echo '|                                                                       |'
 echo '+-----------------------------------------------------------------------+'
-sleep 3
+#sleep 3
 echo '                                                                         '
 echo '[..] Compiling first level Java source codes packages...'
 #cd simulacao/
@@ -22,5 +22,5 @@ javac **/*.java
 echo '                                                                         '
 echo '[OK] Second level of packages tree compiled.'
 echo '[..] Starting application...'
-sleep 3
+#sleep 3
 java simulation.Main

@@ -1,3 +1,21 @@
 echo 'Cleaning the .class files...'
-rm -r ./simulacao/*.class
-rm -r ./simulacao/**/*.class
+cd ./simulation/
+rm -r *.class
+cd application/
+rm -r *.class
+rm -r **/*.class
+cd ../
+cd util/
+rm -r *.class
+rm -r **/*.class
+cd shortestpathalgorithm/
+rm -r *.class
+rm -r **/*.class
+cd ../../
+cd view/
+rm -r *.class
+rm -r **/*.class
+cd ../
+cd entity/
+rm -r *.class
+rm -r **/*.class

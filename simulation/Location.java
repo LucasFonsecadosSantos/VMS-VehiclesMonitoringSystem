@@ -2,6 +2,9 @@ package simulation;
 
 import java.util.Random;
 
+import simulation.application.SimulationMap;
+import simulation.util.Randomizer;
+
 /**
  * Representa uma localização no mapa
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
@@ -87,6 +90,10 @@ public class Location {
         }
     }
     
+    public static Location getNewRandomLocation(SimulationMap map) {
+        return new Location(Randomizer.getRandomInteger(map.getColumnAmount()),Randomizer.getRandomInteger(map.getRowAmount()));
+    }
+
     /**
      * @return A representacao da localizacao.
      */

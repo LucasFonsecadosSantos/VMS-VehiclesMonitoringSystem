@@ -6,6 +6,8 @@ import simulation.Location;
 import simulation.application.SimulationMap;
 import simulation.entity.hindrance.Product;
 import simulation.entity.provider.Provider;
+import simulation.util.shortestpathalgorithm.ShortestPathAlgorithm;
+import simulation.util.shortestpathalgorithm.algorithmstrategies.VetorialDistance;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,11 @@ public class CarActor extends VehicleActor {
 
     private List<Product> productList;
 
+    private List<Location> destinationLocationList;
+
     private int gasLevel;
+
+    private ShortestPathAlgorithm shortestPathAlgorithm;
 
     private static final String _ICON_PATH_ = "./../../Imagens/Car.jpg";
 
@@ -22,9 +28,19 @@ public class CarActor extends VehicleActor {
     public CarActor(Location location) {
 
         super(location, CarActor._ICON_PATH_);
-        this.productList = new ArrayList<>();
+        initAttributeInstances();
         setGasLevel(CarActor._MAX_GAS_LEVEL_);
 
+    }
+
+    private void initAttributeInstances() {
+        this.shortestPathAlgorithm = new ShortestPathAlgorithm(new VetorialDistance());
+        this.destinationLocationList = new ArrayList<>();
+        this.productList = new ArrayList<>();
+    }
+
+    public void setDestinationLocationList(List<Location> locations) {
+        this.destinationLocationList = locations;
     }
 
     public void increaseGasLevel() {
@@ -48,6 +64,21 @@ public class CarActor extends VehicleActor {
 
     }
 
+    public Location getNextLocation() {
+        
+        Location nextLocation = this.shortestPathAlgorithm.calculateShortestPath(getCurrentLocation(), this.destinationLocationList);
+
+        for (Location location : this.destinationLocationList) {
+            if (location.equals(nextLocation)) {
+                if (nextLocation.equals(getCurrentLocation())) {
+                    this.destinationLocationList.remove(nextLocation);
+                }
+                return nextLocation;
+            }
+        }
+        return nextLocation;
+    }
+
     @Override
     public void executeStep(SimulationMap map, int step){
 
@@ -61,13 +92,13 @@ public class CarActor extends VehicleActor {
                 
                 if (map.isNotNextLocationOccupied(nextLocation)) {
 
-                    provider = map.getProviderAtCoordinates(nextLocation.getX(), nextLocation.getY());
+                    provider = map.getProviderAtCoordinates(currentLocation.getX(), currentLocation.getY());
                     
                     if (provider != null) {
                         System.out.println("Pegou " + provider.getProduct());
                         this.retriveProduct(provider.getProduct());
                     }
-                    super.updateLocation();
+                    super.updateLocation(this.getNextLocation());
                     //updateGasLevel();
 
                 }

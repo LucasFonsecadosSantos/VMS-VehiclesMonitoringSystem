@@ -18,7 +18,7 @@ public class BikeActor extends VehicleActor {
 
         if(destino != null) {
 
-            super.updateLocation();
+            super.updateLocation(getNextLocation());
 
         }
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class Simulation {
     
-    private VehicleActor vehicle;
+    private CarActor vehicle;
     
     private JanelaSimulacao janelaSimulacao;
 
@@ -50,7 +50,9 @@ public class Simulation {
         this.bikeList = initVehicles();
         providerList = initProviders();
         trafficLightList = initTrafficLight();
-        initSimulationMap(bikeList, providerList, trafficLightList);        
+        this.vehicle = initMainVehicle();
+
+        initSimulationMap(bikeList, providerList, trafficLightList);
         janelaSimulacao = new JanelaSimulacao(map);
 
     }
@@ -60,10 +62,10 @@ public class Simulation {
         List<Provider> providerList = new ArrayList<>();
         
         for (int i=0; i<10; i++) {
-            providerList.add(new DeliSectionProvider(initNewLocation()));
-            providerList.add(new DoughProvider(initNewLocation()));
-            providerList.add(new MeatProvider(initNewLocation()));
-            providerList.add(new DrinkProvider(initNewLocation()));
+            providerList.add(new DeliSectionProvider(Location.getNewRandomLocation(this.map)));
+            providerList.add(new DoughProvider(Location.getNewRandomLocation(this.map)));
+            providerList.add(new MeatProvider(Location.getNewRandomLocation(this.map)));
+            providerList.add(new DrinkProvider(Location.getNewRandomLocation(this.map)));
         }
 
         return providerList;
@@ -79,7 +81,7 @@ public class Simulation {
         System.out.println(minTrafficLightAmount);
         for (int i=minTrafficLightAmount; i < minTrafficLightAmount + 10; i++) {
             
-            trafficLightList.add(new TrafficLightActor(initNewLocation()));
+            trafficLightList.add(new TrafficLightActor(Location.getNewRandomLocation(this.map)));
         }
 
         return trafficLightList;
@@ -121,7 +123,6 @@ public class Simulation {
     private List<VehicleActor> initVehicles() {
 
         List<VehicleActor> bikeList = new ArrayList<>();
-        initMainVehicle();
         
         int bikeAmount = Randomizer.getRandomInteger(0,10);
 
@@ -133,25 +134,35 @@ public class Simulation {
 
     }
 
-    private VehicleActor initMainVehicle() {
+    private CarActor initMainVehicle() {
 
-        this.vehicle = new CarActor(initNewLocation());
-        this.vehicle.setNextLocation(initNewLocation());
+        this.vehicle = new CarActor(Location.getNewRandomLocation(this.map));
+        this.vehicle.setDestinationLocationList(initNewDestinationLocationBasedInProviders());
 
         return this.vehicle;
     }
 
     private VehicleActor initBike() {
 
-        VehicleActor bike = new BikeActor(initNewLocation());
-        bike.setNextLocation(initNewLocation());
+        VehicleActor bike = new BikeActor(Location.getNewRandomLocation(this.map));
+        bike.setNextLocation(Location.getNewRandomLocation(this.map));
 
         return bike;
 
     }
 
-    private Location initNewLocation() {
-        return new Location(Randomizer.getRandomInteger(this.map.getColumnAmount()),Randomizer.getRandomInteger(this.map.getRowAmount()));
+    private List<Location> initNewDestinationLocationBasedInProviders() {
+        
+        List<Location> providerLocationList = new ArrayList<>();
+
+        for (Provider provider : this.providerList) {
+
+            providerLocationList.add(provider.getLocation());
+
+        }
+
+        return providerLocationList;
+
     }
 
     public void executeSimulation(int stepAmount){
@@ -194,7 +205,7 @@ public class Simulation {
     private void executeVehicleIteration(int step) {
 
         map.removeVehicle(vehicle);
-        vehicle.executeStep(map, step);
+        this.vehicle.executeStep(map, step);
         map.addVehicle(vehicle);
 
     }

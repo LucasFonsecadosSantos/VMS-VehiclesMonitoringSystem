@@ -18,8 +18,8 @@ public abstract class VehicleActor extends SimulationActor {
         
     }
 
-    protected void updateLocation() {
-        Location nextLocation = getCurrentLocation().calculateNextLocation(getNextLocation());
+    protected void updateLocation(Location nextLocationFromEntity) {
+        Location nextLocation = getCurrentLocation().calculateNextLocation(nextLocationFromEntity);
         setCurrentLocation(nextLocation);
     }
     
