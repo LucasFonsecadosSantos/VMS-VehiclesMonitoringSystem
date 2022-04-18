@@ -1,12 +1,15 @@
 package simulation.application;
 
 import java.util.List;
+import java.util.Map;
 
 import simulation.Location;
 import simulation.entity.actor.BikeActor;
 import simulation.entity.actor.CarActor;
 import simulation.entity.actor.TrafficLightActor;
 import simulation.entity.actor.VehicleActor;
+import simulation.entity.mapfacilities.MapFacility;
+import simulation.entity.mapfacilities.Restaurant;
 import simulation.entity.provider.DeliSectionProvider;
 import simulation.entity.provider.DoughProvider;
 import simulation.entity.provider.DrinkProvider;
@@ -33,7 +36,19 @@ public class Simulation {
 
     private List<Provider> providerList;
 
-    private static final int _MAX_TRAFFIC_LIGHT_ = 5;
+    private List<MapFacility> mapFacilityList;
+
+    private static final double _MAX_PERCENT_PROVIDER_AMOUNT_ = .02;
+
+    private static final double _MIN_PERCENT_PROVIDER_AMOUNT_ = .01;
+
+    private static final double _MAX_PERCENT_TRAFFIC_LIGHT_AMOUNT_ = .15;
+
+    private static final double _MIN_PERCENT_TRAFFIC_LIGHT_AMOUNT_ = .05;
+
+    private static final double _MAX_PERCENT_GAS_STATION_AMOUNT_ = .08;
+
+    private static final double _MIN_PERCENT_GAS_STATION_AMOUNT_ = .01;
     
     private SimulationMap map;
     
@@ -47,13 +62,50 @@ public class Simulation {
 
         map = SimulationMap.getInstance();
 
-        this.bikeList = initVehicles();
-        providerList = initProviders();
-        trafficLightList = initTrafficLight();
+        this.providerList = initProviders();
         this.vehicle = initMainVehicle();
+        this.bikeList = initVehicles();
+        this.trafficLightList = initTrafficLight();
+        this.mapFacilityList = initMapFacilities();
 
-        initSimulationMap(bikeList, providerList, trafficLightList);
+        initSimulationMap(bikeList, providerList, trafficLightList, mapFacilityList);
         janelaSimulacao = new JanelaSimulacao(map);
+
+    }
+
+    private List<MapFacility> initMapFacilities() {
+
+        List<MapFacility> facilityList = new ArrayList<>();
+
+        facilityList = initRestaurant(facilityList);
+        facilityList = initGasStations(facilityList);
+        
+
+        return facilityList;
+
+    }
+
+    private List<MapFacility> initGasStations(List<MapFacility> facilityList) {
+
+        int gasStationAmount = Randomizer.getRandomInteger(
+                                    getPercentageFromMapSize(Simulation._MIN_PERCENT_GAS_STATION_AMOUNT_), 
+                                    getPercentageFromMapSize(Simulation._MAX_PERCENT_GAS_STATION_AMOUNT_)
+                                );
+
+        for (int i=0; i < gasStationAmount; i++)
+        facilityList.add(new Restaurant(Location.getNewRandomLocation(this.map)));
+        return facilityList;
+
+    }
+
+    private int getPercentageFromMapSize(double percentage) {
+        return (int) Math.round(this.map.getColumnAmount() * this.map.getRowAmount() * percentage);
+    }
+
+    private List<MapFacility> initRestaurant(List<MapFacility> facilityList) {
+
+        facilityList.add(new Restaurant(Location.getNewRandomLocation(this.map)));
+        return facilityList;
 
     }
 
@@ -61,7 +113,12 @@ public class Simulation {
 
         List<Provider> providerList = new ArrayList<>();
         
-        for (int i=0; i<10; i++) {
+        int providerAmount = Randomizer.getRandomInteger(
+                                    getPercentageFromMapSize(Simulation._MIN_PERCENT_PROVIDER_AMOUNT_), 
+                                    getPercentageFromMapSize(Simulation._MAX_PERCENT_PROVIDER_AMOUNT_)
+                                );
+
+        for (int i=0; i < providerAmount; i++) {
             providerList.add(new DeliSectionProvider(Location.getNewRandomLocation(this.map)));
             providerList.add(new DoughProvider(Location.getNewRandomLocation(this.map)));
             providerList.add(new MeatProvider(Location.getNewRandomLocation(this.map)));
@@ -76,23 +133,35 @@ public class Simulation {
 
         List<TrafficLightActor> trafficLightList = new ArrayList<>();
 
-        int trafficLightAmount = Randomizer.getRandomInteger(Simulation._MAX_TRAFFIC_LIGHT_);
-        int minTrafficLightAmount = (int) Math.round(this.map.getColumnAmount() * this.map.getRowAmount() *.05);
-        System.out.println(minTrafficLightAmount);
-        for (int i=minTrafficLightAmount; i < minTrafficLightAmount + 10; i++) {
+        int trafficLightAmount = Randomizer.getRandomInteger(
+                                    getPercentageFromMapSize(Simulation._MIN_PERCENT_TRAFFIC_LIGHT_AMOUNT_), 
+                                    getPercentageFromMapSize(Simulation._MAX_PERCENT_TRAFFIC_LIGHT_AMOUNT_)
+                                );
+
+        for (int i=0; i < trafficLightAmount; i++) {
             
             trafficLightList.add(new TrafficLightActor(Location.getNewRandomLocation(this.map)));
+
         }
 
         return trafficLightList;
 
     }
 
-    private void initSimulationMap(List<VehicleActor> bikeList, List<Provider> providerList, List<TrafficLightActor> trafficLightList) {
+    private void initSimulationMap(List<VehicleActor> bikeList, List<Provider> providerList, List<TrafficLightActor> trafficLightList, List<MapFacility> facilityList) {
         
+        addFacilitiesToMap(facilityList);
         addVehiclesToMap(bikeList);
         addProvidersToMap(providerList);
         addTrafficLightsToMap(trafficLightList);
+
+    }
+
+    private void addFacilitiesToMap(List<MapFacility> facilityList) {
+
+        for (MapFacility facility : facilityList) {
+            this.map.addFacility(facility);
+        }
 
     }
 

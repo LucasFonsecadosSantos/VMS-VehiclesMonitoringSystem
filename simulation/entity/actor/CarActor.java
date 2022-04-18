@@ -64,10 +64,14 @@ public class CarActor extends VehicleActor {
 
     }
 
-    public Location getNextLocation() {
+    public Location getNextLocation(SimulationMap map) {
         
-        Location nextLocation = this.shortestPathAlgorithm.calculateShortestPath(getCurrentLocation(), this.destinationLocationList);
+        if (this.destinationLocationList.isEmpty()) {
+            return map.getRestaurantLocation();
+        }
 
+        Location nextLocation = this.shortestPathAlgorithm.calculateShortestPath(getCurrentLocation(), this.destinationLocationList);
+        
         for (Location location : this.destinationLocationList) {
             if (location.equals(nextLocation)) {
                 if (nextLocation.equals(getCurrentLocation())) {
@@ -95,10 +99,9 @@ public class CarActor extends VehicleActor {
                     provider = map.getProviderAtCoordinates(currentLocation.getX(), currentLocation.getY());
                     
                     if (provider != null) {
-                        System.out.println("Pegou " + provider.getProduct());
                         this.retriveProduct(provider.getProduct());
                     }
-                    super.updateLocation(this.getNextLocation());
+                    super.updateLocation(this.getNextLocation(map));
                     //updateGasLevel();
 
                 }

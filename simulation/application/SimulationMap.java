@@ -6,6 +6,8 @@ import simulation.Location;
 import simulation.entity.actor.SimulationActor;
 import simulation.entity.actor.TrafficLightActor;
 import simulation.entity.actor.VehicleActor;
+import simulation.entity.mapfacilities.MapFacility;
+import simulation.entity.mapfacilities.Restaurant;
 import simulation.entity.provider.Provider;
 
 import java.util.HashMap;
@@ -22,6 +24,8 @@ public class SimulationMap {
 
     private Map<TrafficLightActor, Location> trafficLights;
     
+    private Map<MapFacility, Location> facilities;
+
     private int columnAmount;
     
     private int rowAmount;
@@ -71,6 +75,7 @@ public class SimulationMap {
 
         this.providers = new HashMap<>();
         this.trafficLights = new HashMap<>();
+        this.facilities = new HashMap<>();
 
     }
     
@@ -81,6 +86,23 @@ public class SimulationMap {
     public void addProvider(Provider provider){
         providers.put(provider, provider.getLocation());
     }
+
+    public void addFacility(MapFacility facility){
+        facilities.put(facility, facility.getLocation());
+    }
+
+    public Location getRestaurantLocation() {
+
+        for (Map.Entry<MapFacility, Location> entry : this.facilities.entrySet()) {
+
+            if (entry.getKey() instanceof Restaurant) {
+                return entry.getValue();
+            }
+
+        }
+
+        return null;
+    } 
 
     public void addTrafficLight(TrafficLightActor trafficLight){
         trafficLights.put(trafficLight, trafficLight.getCurrentLocation());
