@@ -7,7 +7,7 @@ public class MeatProvider extends Provider {
 
     private static final String _ICON_PATH_ = "./../../Imagens/MeatProvider.jpeg";
 
-    private static final int _WEIGHT_OF_THE_SUPPLIED_PRODUCT_ = 4;
+    private static final int _WEIGHT_OF_THE_SUPPLIED_PRODUCT_ = 3;
 
     public MeatProvider(Location location) {
 

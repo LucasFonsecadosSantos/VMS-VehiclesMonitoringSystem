@@ -25,15 +25,15 @@ public class VetorialDistance implements ShortestPathAlgorithmStrategy {
             yAxisDistance = Math.pow((currentLocation.getY() - candidateLocation.getY()), 2);
 
             candidateWeight = Math.sqrt(xAxisDistance + yAxisDistance);
-            System.out.println("" + xAxisDistance + ", " + yAxisDistance + " -> Candidate: " + candidateWeight + " -> Lowest: " + lowestWeight);
+            //System.out.println("" + xAxisDistance + ", " + yAxisDistance + " -> Candidate: " + candidateWeight + " -> Lowest: " + lowestWeight);
             if (candidateWeight <= lowestWeight) {
                 lowestWeight = candidateWeight;
                 nextXCoordinate = candidateLocation.getX();
                 nextYCoordinate = candidateLocation.getY();
             }
-            System.out.println("------------------------------");
+            //System.out.println("------------------------------");
         }
-        System.out.println("" + nextXCoordinate + ", " + nextYCoordinate);
+        //System.out.println("" + nextXCoordinate + ", " + nextYCoordinate);
         return new Location(nextXCoordinate, nextYCoordinate);
 
     }

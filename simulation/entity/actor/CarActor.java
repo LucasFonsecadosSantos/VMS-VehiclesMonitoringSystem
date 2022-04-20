@@ -23,13 +23,10 @@ public class CarActor extends VehicleActor {
 
     private static final String _ICON_PATH_ = "./../../Imagens/Car.jpg";
 
-    private static final int _MAX_GAS_LEVEL_ = 30;
-
     public CarActor(Location location) {
 
         super(location, CarActor._ICON_PATH_);
         initAttributeInstances();
-        setGasLevel(CarActor._MAX_GAS_LEVEL_);
 
     }
 
@@ -43,13 +40,6 @@ public class CarActor extends VehicleActor {
         this.destinationLocationList = locations;
     }
 
-    public void increaseGasLevel() {
-        this.gasLevel++;
-    }
-
-    public void decreaseGasLevel() {
-        this.gasLevel--;
-    }
 
     public int getGasLevel() {
         return this.gasLevel;
@@ -59,7 +49,6 @@ public class CarActor extends VehicleActor {
 
         if (!this.productList.contains(product)) {
             this.productList.add(product);
-            System.out.println("SIZE " + this.productList.size());
         }
 
     }
@@ -87,12 +76,12 @@ public class CarActor extends VehicleActor {
     public void executeStep(SimulationMap map, int step){
 
         Location currentLocation = getCurrentLocation();
-        Location nextLocation = getNextLocation();
+        Location nextLocation = this.getNextLocation(map);
         Provider provider = null;
-
+        
         if(isValidStep(nextLocation, step)) {
-            
-            if (map.isAllowToContinue(currentLocation)) {
+
+            if (map.isAllowToContinue(nextLocation)) {
                 
                 if (map.isNotNextLocationOccupied(nextLocation)) {
 
@@ -101,8 +90,8 @@ public class CarActor extends VehicleActor {
                     if (provider != null) {
                         this.retriveProduct(provider.getProduct());
                     }
+                    
                     super.updateLocation(this.getNextLocation(map));
-                    //updateGasLevel();
 
                 }
             }
@@ -116,10 +105,6 @@ public class CarActor extends VehicleActor {
         (nextLocation != null && step % getWeight() == 0));
     }
 
-    private void setGasLevel(int level) {
-        this.gasLevel = level;
-    }
-
     private int getWeight() {
         
         int weight = 0;
@@ -131,13 +116,5 @@ public class CarActor extends VehicleActor {
         return weight;
 
     }
-
-    // private void updateGasLevel() {
-    //     if (!map.hasGasStationAtCurrentLocation(getCurrentLocation())) {
-    //         decreaseGasLevel();
-    //     } else {
-    //         increaseGasLevel();
-    //     }
-    // }
 
 }

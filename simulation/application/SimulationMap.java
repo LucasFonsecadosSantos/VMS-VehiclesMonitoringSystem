@@ -150,14 +150,22 @@ public class SimulationMap {
 
     }
 
-    // public boolean hasGasStationAtCurrentLocation(Localizacao location) {
-
-    //     return 
-
-    // }
 
     public SimulationActor getActor(int x, int y) {
         return actors[x][y];
+    }
+
+    public MapFacility getFacilityAtCoordinates(int x, int y) {
+
+        for(Map.Entry<MapFacility, Location> entry : facilities.entrySet()) {
+
+            if (entry.getValue().getX() == x && entry.getValue().getY() == y) {
+                return entry.getKey();
+            }
+
+        }
+        return null;
+
     }
 
     public TrafficLightActor getTrafficLightAtCoordinates(int x, int y) {

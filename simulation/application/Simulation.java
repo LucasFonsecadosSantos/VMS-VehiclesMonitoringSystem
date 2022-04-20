@@ -45,10 +45,6 @@ public class Simulation {
     private static final double _MAX_PERCENT_TRAFFIC_LIGHT_AMOUNT_ = .15;
 
     private static final double _MIN_PERCENT_TRAFFIC_LIGHT_AMOUNT_ = .05;
-
-    private static final double _MAX_PERCENT_GAS_STATION_AMOUNT_ = .08;
-
-    private static final double _MIN_PERCENT_GAS_STATION_AMOUNT_ = .01;
     
     private SimulationMap map;
     
@@ -78,22 +74,7 @@ public class Simulation {
         List<MapFacility> facilityList = new ArrayList<>();
 
         facilityList = initRestaurant(facilityList);
-        facilityList = initGasStations(facilityList);
-        
 
-        return facilityList;
-
-    }
-
-    private List<MapFacility> initGasStations(List<MapFacility> facilityList) {
-
-        int gasStationAmount = Randomizer.getRandomInteger(
-                                    getPercentageFromMapSize(Simulation._MIN_PERCENT_GAS_STATION_AMOUNT_), 
-                                    getPercentageFromMapSize(Simulation._MAX_PERCENT_GAS_STATION_AMOUNT_)
-                                );
-
-        for (int i=0; i < gasStationAmount; i++)
-        facilityList.add(new Restaurant(Location.getNewRandomLocation(this.map)));
         return facilityList;
 
     }
@@ -118,7 +99,7 @@ public class Simulation {
                                     getPercentageFromMapSize(Simulation._MAX_PERCENT_PROVIDER_AMOUNT_)
                                 );
 
-        for (int i=0; i < providerAmount; i++) {
+        for (int i=0; i < 1; i++) {
             providerList.add(new DeliSectionProvider(Location.getNewRandomLocation(this.map)));
             providerList.add(new DoughProvider(Location.getNewRandomLocation(this.map)));
             providerList.add(new MeatProvider(Location.getNewRandomLocation(this.map)));

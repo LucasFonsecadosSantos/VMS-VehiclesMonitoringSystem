@@ -10,6 +10,7 @@ import simulation.entity.actor.CarActor;
 import simulation.entity.actor.SimulationActor;
 import simulation.entity.actor.TrafficLightActor;
 import simulation.entity.actor.VehicleActor;
+import simulation.entity.mapfacilities.MapFacility;
 import simulation.entity.provider.Provider;
 
 /**
@@ -42,13 +43,17 @@ public class JanelaSimulacao extends JFrame{
                 
                 TrafficLightActor trafficLight = map.getTrafficLightAtCoordinates(i, j);
                 Provider provider = map.getProviderAtCoordinates(i, j);
-                if (provider!= null) {
+                MapFacility facility = map.getFacilityAtCoordinates(i, j);
+
+                if (provider != null) {
                     visaoMapa.desenharImagem(i, j, provider.getImage());
                 }
-                if (trafficLight!= null) {
+                if (trafficLight != null) {
                     visaoMapa.desenharImagem(i, j, trafficLight.getImage());
                 }
-                
+                if (facility != null) {
+                    visaoMapa.desenharImagem(i, j, facility.getImage());
+                }
                 if(map.getActor(i, j) != null){//Se existir algum objeto na posicao (i,j)
                     SimulationActor veiculo = map.getActor(i, j);          
                     
