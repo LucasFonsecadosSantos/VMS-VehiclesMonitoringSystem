@@ -40,11 +40,6 @@ public class CarActor extends VehicleActor {
         this.destinationLocationList = locations;
     }
 
-
-    public int getGasLevel() {
-        return this.gasLevel;
-    }
-
     public void retriveProduct(Product product) {
 
         if (!this.productList.contains(product)) {
@@ -105,7 +100,7 @@ public class CarActor extends VehicleActor {
         (nextLocation != null && step % getWeight() == 0));
     }
 
-    private int getWeight() {
+    public int getWeight() {
         
         int weight = 0;
 
@@ -115,6 +110,10 @@ public class CarActor extends VehicleActor {
 
         return weight;
 
+    }
+
+    public int getCollectedProductAmount() {
+        return this.productList.size();
     }
 
 }

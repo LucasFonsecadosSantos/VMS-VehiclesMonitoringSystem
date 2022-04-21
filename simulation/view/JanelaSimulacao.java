@@ -18,8 +18,10 @@ import simulation.entity.provider.Provider;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class JanelaSimulacao extends JFrame{
+
     private SimulationMap map;
     private VisaoMapa visaoMapa;
+    private InformationView infoView;
     
     public JanelaSimulacao(SimulationMap map){
         this.map = map;
@@ -29,12 +31,14 @@ public class JanelaSimulacao extends JFrame{
         setSize(1000,1000);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        infoView = new InformationView();
     }
     
     /**
      * Mostra o estado atual do map.
      */
     public void executarAcao(){
+
         visaoMapa.preparePaint();
         int rowAmount = map.getRowAmount();
         for(int i = 0; i < rowAmount; i++){
@@ -67,6 +71,14 @@ public class JanelaSimulacao extends JFrame{
             }
         }
         visaoMapa.repaint();
+    }
+
+    public void updateCarWeightInformation(int weight) {
+        this.infoView.updateCarWeightInformation(weight);
+    }
+
+    public void updateCollectedProductAmountInformation(int amount) {
+        this.infoView.updateCollectedProductAmount(amount);;
     }
 
     /**
@@ -159,6 +171,8 @@ public class JanelaSimulacao extends JFrame{
                 g.drawImage(imagemMapa, 0, 0, null);
             }
         }
+
+        
     }
     
 }

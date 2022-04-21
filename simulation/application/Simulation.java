@@ -16,6 +16,7 @@ import simulation.entity.provider.DrinkProvider;
 import simulation.entity.provider.MeatProvider;
 import simulation.entity.provider.Provider;
 import simulation.util.Randomizer;
+import simulation.view.InformationView;
 import simulation.view.JanelaSimulacao;
 
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class Simulation {
 
         initSimulationMap(bikeList, providerList, trafficLightList, mapFacilityList);
         janelaSimulacao = new JanelaSimulacao(map);
+        
+
 
     }
 
@@ -231,7 +234,17 @@ public class Simulation {
         executeBikeIteration(stepNumber);
         executeVehicleIteration(stepNumber);
         
+        updateInformationsView();
+
         janelaSimulacao.executarAcao();
+        
+    }
+
+    private void updateInformationsView() {
+
+        this.janelaSimulacao.updateCarWeightInformation(this.vehicle.getWeight());
+        this.janelaSimulacao.updateCollectedProductAmountInformation(this.vehicle.getCollectedProductAmount());
+
     }
 
     private void executeTrafficLightIteration(int step) {
