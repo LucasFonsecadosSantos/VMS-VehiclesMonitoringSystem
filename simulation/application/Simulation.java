@@ -234,17 +234,18 @@ public class Simulation {
         executeBikeIteration(stepNumber);
         executeVehicleIteration(stepNumber);
         
-        updateInformationsView();
+        updateInformationsView(stepNumber);
 
         janelaSimulacao.executarAcao();
         
     }
 
-    private void updateInformationsView() {
+    private void updateInformationsView(int stepNumber) {
 
         this.janelaSimulacao.updateCarWeightInformation(this.vehicle.getWeight());
         this.janelaSimulacao.updateCollectedProductAmountInformation(this.vehicle.getCollectedProductAmount());
-
+        this.janelaSimulacao.updateIterationAmount(stepNumber);
+        this.janelaSimulacao.increaseVisitedProviderAmount(stepNumber);
     }
 
     private void executeTrafficLightIteration(int step) {
