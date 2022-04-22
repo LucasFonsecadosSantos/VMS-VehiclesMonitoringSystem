@@ -17,7 +17,7 @@ public class CarActor extends VehicleActor {
 
     private List<Location> destinationLocationList;
 
-    private int gasLevel;
+    private int visitedProviderAmount;
 
     private ShortestPathAlgorithm shortestPathAlgorithm;
 
@@ -83,6 +83,7 @@ public class CarActor extends VehicleActor {
                     provider = map.getProviderAtCoordinates(currentLocation.getX(), currentLocation.getY());
                     
                     if (provider != null) {
+                        this.visitedProviderAmount++;
                         this.retriveProduct(provider.getProduct());
                     }
                     
@@ -114,6 +115,10 @@ public class CarActor extends VehicleActor {
 
     public int getCollectedProductAmount() {
         return this.productList.size();
+    }
+
+    public int getVisitedProviderAmount() {
+        return visitedProviderAmount;
     }
 
 }

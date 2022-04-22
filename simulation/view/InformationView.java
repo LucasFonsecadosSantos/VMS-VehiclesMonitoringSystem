@@ -91,9 +91,9 @@ public class InformationView extends JFrame {
 
     }
 
-    public void increaseVisitedProviderAmount() {
+    public void updateVisitedProviderAmount(int amount) {
 
-        this.visitedProviderAmount++;
+        this.visitedProviderAmount = amount;
         this.visitedProviderAmountLabel02.setText(String.valueOf(this.visitedProviderAmount));
 
     }

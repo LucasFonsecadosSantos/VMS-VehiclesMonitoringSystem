@@ -245,7 +245,7 @@ public class Simulation {
         this.janelaSimulacao.updateCarWeightInformation(this.vehicle.getWeight());
         this.janelaSimulacao.updateCollectedProductAmountInformation(this.vehicle.getCollectedProductAmount());
         this.janelaSimulacao.updateIterationAmount(stepNumber);
-        this.janelaSimulacao.increaseVisitedProviderAmount(stepNumber);
+        this.janelaSimulacao.updateVisitedProviderAmount(this.vehicle.getVisitedProviderAmount());
     }
 
     private void executeTrafficLightIteration(int step) {
