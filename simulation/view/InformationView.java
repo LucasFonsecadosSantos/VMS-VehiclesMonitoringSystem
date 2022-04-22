@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class InformationView extends JFrame {
+
+    private JPanel panel;
     
     private JLabel iterationLabel;
 
@@ -57,15 +59,24 @@ public class InformationView extends JFrame {
         this.carWeightLabel02 = new JLabel("");
         this.visitedProviderAmountLabel01 = new JLabel("Visited provider amount: ");
         this.visitedProviderAmountLabel02 = new JLabel("");
+        this.panel = new JPanel();
 
     }
 
     private void buildLayout() {
         
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        getContentPane().add(this.iterationLabel);
-        getContentPane().add(this.iteration02Label);
+        panel.setLayout(new GridLayout(4, 2));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.add(this.iterationLabel);
+        panel.add(this.iteration02Label);
+        panel.add(this.carProductAmountLabel01);
+        panel.add(this.carProductAmountLabel02);
+        panel.add(this.carWeightLabel01);
+        panel.add(this.carWeightLabel02);
+        panel.add(this.visitedProviderAmountLabel01);
+        panel.add(this.visitedProviderAmountLabel02);
 
+        getContentPane().add(panel);
     }
 
     public void updateIterationAmount(int stepNumber) {

@@ -78,7 +78,15 @@ public class JanelaSimulacao extends JFrame{
     }
 
     public void updateCollectedProductAmountInformation(int amount) {
-        this.infoView.updateCollectedProductAmount(amount);;
+        this.infoView.updateCollectedProductAmount(amount);
+    }
+
+    public void updateIterationAmount(int stepNumber) {
+        this.infoView.updateIterationAmount(stepNumber);
+    }
+
+    public void increaseVisitedProviderAmount(int stepNumber) {
+        this.infoView.increaseVisitedProviderAmount();
     }
 
     /**
